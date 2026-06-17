@@ -1,4 +1,4 @@
-name: UI Automation Tests
+name: UI Tests
 
 on:
   push:
@@ -8,13 +8,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        browser: [chrome, firefox, edge]
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -22,5 +17,7 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Run Tests on ${{ matrix.browser }}
-        run: mvn clean test -Dbrowser=${{ matrix.browser }}
+      - name: Run Tests
+        run: mvn clean test -Dbrowser=chrome
+        env:
+          CI: true

@@ -13,17 +13,15 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-
-        String browser = ConfigReader.get("browser");
-
+        String browser = System.getProperty("browser", "chrome");
         driver = DriverFactory.createDriver(browser);
-        DriverManager.setDriver(driver);
-
-        driver.manage().window().maximize();
+        driver.get("https://practicesoftwaretesting.com/");
     }
 
     @AfterMethod
     public void tearDown() {
-        DriverManager.quitDriver();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
